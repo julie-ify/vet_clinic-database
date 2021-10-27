@@ -21,3 +21,38 @@ INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) 
 -- Animal: Her name is Blossom. She was born on Oct 13th, 1998, and currently weighs 17kg. She is neutered and she has tried to escape 3 times.
 INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) VALUES ('Blossom', '1998-10-13', 3, true, 17.0);
 
+
+-- Insert the following data into the owners table:
+-- Sam Smith 34 years old.
+-- Jennifer Orwell 19 years old.
+-- Bob 45 years old.
+-- Melody Pond 77 years old.
+-- Dean Winchester 14 years old.
+-- Jodie Whittaker 38 years old.
+INSERT INTO owners (full_name, age) VALUES ('Sam Smith', 34), ('Jennifer Orwell', 19), ('Bob', 45), ('Melody Pond', 77), ('Dean Winchester', 14), ('Jodie Whittaker', 38);
+
+-- Insert the following data into the species table:
+-- Pokemon
+-- Digimon
+INSERT INTO species (name) VALUES ('Pokemon'), ('Digimon');
+
+-- Modify your inserted animals so it includes the species_id value:
+-- If the name ends in "mon" it will be Digimon
+-- All other animals are Pokemon
+UPDATE animals SET species_id = (SELECT id FROM species WHERE name = 'Digimon') WHERE name LIKE '%mon';
+UPDATE animals SET species_id = (SELECT id FROM species WHERE name = 'Pokemon') WHERE name NOT LIKE '%mon';
+
+-- Sam Smith owns Agumon.
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Sam Smith') WHERE name = 'Agumon';
+
+-- Jennifer Orwell owns Gabumon and Pikachu.
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Jennifer Orwell') WHERE name = 'Gabumon' OR name = 'Pikachu';
+
+-- Bob owns Devimon and Plantmon.
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Bob') WHERE name = 'Devimon' OR name = 'Plantmon';
+
+-- Melody Pond owns Charmander, Squirtle, and Blossom.
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Melody Pond') WHERE name = 'Charmander' OR name = 'Squirtle' OR name = 'Blossom';
+
+-- Dean Winchester owns Angemon and Boarmon.
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Dean Winchester') WHERE name = 'Angemon' OR name = 'Boarmon';
